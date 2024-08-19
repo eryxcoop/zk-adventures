@@ -7,6 +7,7 @@ CONTAINER_NAME="sage"
 # Ensure it's right folder
 if [[ ! -f "README.md" ]]; then
     echo "Please run this script from the repo root"
+    exit 1
 fi
 
 # Check container status

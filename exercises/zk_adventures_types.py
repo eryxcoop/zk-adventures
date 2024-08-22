@@ -7,3 +7,26 @@ PRIME = 65537
 F = GF(PRIME)
 Polynomial = PolynomialRing(F, 'X')
 
+K = GF(4 * PRIME - 1)
+L = K.extension(
+    PolynomialRing(K, "Z")("Z^2 + 1"),
+    "i"
+)
+
+E_over_K = EllipticCurve(K, (-1, 0))
+E = E_over_K
+E_over_L = EllipticCurve(L, (-1, 0))
+
+CURVE_GENERATOR = E_over_K(225652, 205523, 1)
+CURVE_NEUTRAL_ELEMENT = E_over_K(0, 1, 0)
+
+def pairing(P, Q):
+    if Q[2] == 0 or P[2] == 0:
+        return L(1)
+    
+    assert P.order() == Q.order() == PRIME
+    Q_phi = E_over_L(-Q[0], L("i") * Q[1], Q[2])
+    return E_over_L(P).weil_pairing(Q_phi, PRIME)
+    # return E_over_L(P).tate_pairing(Q_phi, F.order(), 2)
+
+

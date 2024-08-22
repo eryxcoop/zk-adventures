@@ -161,4 +161,3 @@ import ctypes
 def interpolate_values(domain: Domain, values: List[int]) -> Polynomial:
     return Polynomial.lagrange_polynomial(zip(domain, values))
 
-
